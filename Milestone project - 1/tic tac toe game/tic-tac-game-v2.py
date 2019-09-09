@@ -1,5 +1,12 @@
 import random
 
+def _decorator_counter(function):
+    function.calls = 0
+    def wrapper(player_number,player_marker,playground):
+        function(player_number,player_marker,playground)
+        function.calls +=1
+    return wrapper
+
 def playground_set():
 #this is for initialize the playground
 	playground = [[] for i in range(3)]
@@ -72,16 +79,6 @@ def playground_check(player_number, player_marker, playground):
             print(f'Game over! Player-{player_number} win')
             return True
 
-    else:
-        for i in range(3):
-            for j in range(3):
-                if playground[i][j] == ' ':
-                    free_slots +=1
-        
-        if free_slots == 0:
-            print("Game over! Nobody wins!")
-            return True
-
 def player_marker_set():
     
     marker = ''
@@ -129,7 +126,6 @@ def playground_slot_check(playground,i,j):
 
 def players_turn(player_number,player_marker,playground):
     #player's turn
-    
     if player_number == '1':
         print(f"Player {player_number} turn:")
         i,j = players_input(playground)
@@ -154,16 +150,19 @@ def game():
     player_1_marker, player_2_marker = player_marker_set()
     flip = random.randint(0,1)
     
+    decorated_players_turn = _decorator_counter(players_turn)
+
     if flip == 0:
-        while (players_turn('1',player_1_marker, playground) != True and 
-               players_turn('2',player_2_marker, playground) !=True):
+        while (decorated_players_turn('1',player_1_marker, playground) !=True and 
+               decorated_players_turn('2',player_2_marker, playground) !=True) and (players_turn.calls != 16):
                 continue
         
-    else:
-        while (players_turn('2',player_2_marker, playground) != True and 
-               players_turn('1',player_1_marker, playground) !=True):
+    elif flip == 1:
+        while (decorated_players_turn('2',player_2_marker, playground) !=True and 
+               decorated_players_turn('1',player_1_marker, playground) !=True) and (players_turn.calls != 16):
                 continue
     
+    print("Game over! Nobody wins!")
     if replay():
         game()
 
