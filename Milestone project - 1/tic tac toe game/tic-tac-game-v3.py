@@ -20,8 +20,6 @@ def playground_set():
 
 	return playground
 
-
-
 def playground_print(playground):
 #list unpacking - you can unpack every sequence
 #this is for printing the playground
@@ -97,8 +95,6 @@ def players_input(playground):
     args = []
     while True:
         player_input = input()
-        #i = player_input.split()[0]
-        #j = player_input.split()[1]
         
         if players_input_check(player_input) != False:
             i = int(player_input[0])
