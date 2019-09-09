@@ -1,4 +1,5 @@
 import random
+from IPython.display import clear_output
 
 def _decorator_counter(function):
     def wrapper(player_number,player_marker,playground):
@@ -19,7 +20,7 @@ def playground_set():
 
 	return playground
 
-from IPython.display import clear_output
+
 
 def playground_print(playground):
 #list unpacking - you can unpack every sequence
