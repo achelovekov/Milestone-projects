@@ -1,3 +1,5 @@
+import math
+
 class Sort():
 	def bubbleSortRecN(A, n):
 		if n == 1:
@@ -63,3 +65,35 @@ class Sort():
 			Sort.mergeSortRec(l) 
 			Sort.mergeSortRec(r)
 			merge(A,l,r)
+
+	def quickSortRec(A, left=0, right=None):
+
+		def partition(A, left, right, pivot):
+
+			while left <= right:
+				while A[left] < pivot:
+					left += 1
+				while A[right] > pivot:
+					right -= 1
+				if left <= right:
+					A[left],A[right] = A[right],A[left]
+					left += 1
+					right -= 1
+
+			return left
+
+		if right is None:
+			right = len(A)-1
+
+		if left >= right:
+			return
+
+		pivot = A[math.floor((left+right)/2)]
+
+		index = partition(A,left,right,pivot)
+		Sort.quickSortRec(A,left,index-1)
+		Sort.quickSortRec(A,index,right)
+
+
+
+
